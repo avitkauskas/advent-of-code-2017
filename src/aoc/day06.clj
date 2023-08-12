@@ -52,4 +52,4 @@
   (part1)
   (dotimes [_ 10] (time (part1))) ; "Elapsed time: 74.323583 msecs"
   (part2)
-  (dotimes [_ 10] (time (part2))))
+  (dotimes [_ 10] (time (part2)))) ; "Elapsed time: 117.477791 msecs"
