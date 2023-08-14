@@ -31,25 +31,33 @@
 (def additional-lens [17 31 73 47 23])
 (def rounds 64)
 
-(def input-part2
-  (as-> (slurp "data/input10.txt") $
-    (str/trim-newline $)
+(def file-data
+  (-> (slurp "data/input10.txt")
+      (str/trim-newline)))
+
+(defn full-input [data]
+  (as-> data $
     (map int $)
     (concat $ additional-lens)))
 
-(def rounds-seq
-  (map vector
-       (take (* rounds (count input-part2)) (cycle input-part2))
-       (range)))
+(defn rounds-seq [data]
+  (let [in (full-input data)]
+    (map vector
+         (take (* rounds (count in)) (cycle in))
+         (range))))
 
-(defn part2 []
-  (->> (reduce twist init-state rounds-seq)
+(defn knot-hash [data]
+  (->> (reduce twist init-state (rounds-seq data))
        :ring
        (partition 16)
        (map #(apply bit-xor %))
        (map #(format "%02x" %))
        (apply str)))
 
+(defn part2 []
+  (knot-hash file-data))
+
 (comment
   (part1)
-  (part2))
+  (part2)
+  (dotimes [_ 10] (time (part2)))) ; "Elapsed time: 341.171625 msecs"
