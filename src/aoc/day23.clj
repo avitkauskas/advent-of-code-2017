@@ -52,10 +52,10 @@
 (defn non-prime? [n]
   (let [root (int (math/sqrt n))]
     (loop [i 2]
-      (if (> i root)
-        false
-        (if (zero? (rem n i))
-          true
+      (if (zero? (rem n i))
+        true
+        (if (= i root)
+          false
           (recur (inc i)))))))
 
 (defn part2 []
